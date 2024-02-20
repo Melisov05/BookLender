@@ -13,6 +13,13 @@ public class Employee {
         return booksIssued;
     }
 
+    public Employee(int id, String name, boolean ifTookBook, List<Integer> booksIssued) {
+        this.id = id;
+        this.name = name;
+        this.ifTookBook = ifTookBook;
+        this.booksIssued = booksIssued;
+    }
+
     public int getId() {
         return id;
     }

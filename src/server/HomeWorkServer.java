@@ -1,17 +1,15 @@
 package server;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
 import com.sun.net.httpserver.HttpExchange;
+import entity.Book;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
 import java.io.*;
-import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 public class HomeWorkServer extends BasicServer{
     private final static Configuration freemarker = initFreeMarker();
@@ -24,7 +22,7 @@ public class HomeWorkServer extends BasicServer{
     private static Configuration initFreeMarker() {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
         try {
-            cfg.setDirectoryForTemplateLoading(new File("data"));
+            cfg.setDirectoryForTemplateLoading(new File("."));
             cfg.setDefaultEncoding("UTF-8");
             cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
             cfg.setLogTemplateExceptions(false);
@@ -37,20 +35,20 @@ public class HomeWorkServer extends BasicServer{
     }
 
     private void booksHandler(HttpExchange exchange) {
-        Map<String, Object> libraryData = loadLibraryData();
-        renderTemplate(exchange, "books.html", libraryData);
+        List<Book> books = getBooksData();
+        Map<String, Object> dataModel = new HashMap<>();
+        dataModel.put("books", books);
+        renderTemplate(exchange, "books.html", dataModel);
     }
 
 
-    private Map<String, Object> loadLibraryData() {
-        Gson gson = new Gson();
-        try (Reader reader = new FileReader("../libraryData.json")) {
-            Type type = new TypeToken<Map<String, Object>>(){}.getType();
-            return gson.fromJson(reader, type);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Collections.emptyMap();
-        }
+
+    private List<Book> getBooksData() {
+        List<Book> books = new ArrayList<>();
+        books.add(new Book(1, "Java for Beginners", "Author A", false, 0));
+        books.add(new Book(2, "Advanced Java Topics", "Author B", true, 1));
+        books.add(new Book(2, "Clean code", "Author C", true, 3));
+        return books;
     }
 
 
