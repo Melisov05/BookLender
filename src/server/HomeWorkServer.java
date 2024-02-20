@@ -1,18 +1,16 @@
 package server;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
-import entity.Book;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.Map;
 
 public class HomeWorkServer extends BasicServer{
@@ -39,14 +37,14 @@ public class HomeWorkServer extends BasicServer{
     }
 
     private void booksHandler(HttpExchange exchange) {
-        Map<String, Object> libraryData = loadLibraryData(); // Загрузка данных из JSON
-        renderTemplate(exchange, "books_list.ftl", libraryData);
+        Map<String, Object> libraryData = loadLibraryData();
+        renderTemplate(exchange, "books.html", libraryData);
     }
 
-    // Метод для загрузки данных из JSON файла
+
     private Map<String, Object> loadLibraryData() {
         Gson gson = new Gson();
-        try (Reader reader = new FileReader("path/to/libraryData.json")) {
+        try (Reader reader = new FileReader("../libraryData.json")) {
             Type type = new TypeToken<Map<String, Object>>(){}.getType();
             return gson.fromJson(reader, type);
         } catch (Exception e) {
@@ -55,7 +53,7 @@ public class HomeWorkServer extends BasicServer{
         }
     }
 
-    // Метод для рендеринга шаблонов
+
     protected void renderTemplate(HttpExchange exchange, String templateFile, Object dataModel) {
         try {
             Template template = freemarker.getTemplate(templateFile);
@@ -69,7 +67,7 @@ public class HomeWorkServer extends BasicServer{
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
             try {
-                exchange.sendResponseHeaders(500, -1); // Отправка кода ошибки 500
+                exchange.sendResponseHeaders(500, -1);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

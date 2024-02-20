@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список книг</title>
+</head>
+<body>
+    <h1>Список книг</h1>
+    <ul>
+        <#list books as book>
+            <li>${book.title} - Автор: ${book.author}, Статус: <#if book.isIssued>Выдана (ID сотрудника: ${book.issuedTo})<#else>В наличии
+            </#if></li>
+        </#list>
+    </ul>
+</body>
+</html>

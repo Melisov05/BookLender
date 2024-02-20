@@ -1,11 +1,16 @@
 package entity;
 
+import java.util.List;
+
 public class Book {
 
     private int id;
     private String name;
     private String author;
     private boolean isGiven;
+
+    private int issuedTo;
+
 
     public Book(int id, String name, String author, boolean isGiven) {
         this.id = id;
