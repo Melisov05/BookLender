@@ -43,12 +43,12 @@ public class HomeWorkServer extends BasicServer{
         List<Book> currentBooksEmployee2 = Arrays.asList(
                 new Book(4, "1984", "George Orwell", "/images/1984.jpg", true));
         List<Book> pastBooksEmployee2 = Arrays.asList(
-                new Book(5, "Brave New World", "Aldous Huxley", "/images/bravenewworld.jpg", false),
+                new Book(5, "Brave New World", "Aldous Huxley", "/images/braveNewWorld.jpg", false),
                 new Book(6, "Fahrenheit 451", "Ray Bradbury", "/images/fahrenheit451.jpg", false));
         employees.add(new Employee(2, "Jane Smith", currentBooksEmployee2, pastBooksEmployee2));
 
         List<Book> currentBooksEmployee3 = Arrays.asList(
-                new Book(7, "The Catcher in the Rye", "J.D. Salinger", "/images/catcherintherye.jpg", true));
+                new Book(7, "The Catcher in the Rye", "J.D. Salinger", "/images/catcherInTheRye.jpg", true));
         List<Book> pastBooksEmployee3 = new ArrayList<>();
         employees.add(new Employee(3, "Alex Johnson", currentBooksEmployee3, pastBooksEmployee3));
 
